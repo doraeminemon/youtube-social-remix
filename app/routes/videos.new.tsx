@@ -27,9 +27,9 @@ export const action = async ({ request }: ActionArgs) => {
     );
   }
 
-  const video = await createVideo({ link, title, userId });
+  await createVideo({ link, title, userId });
 
-  return redirect(`/videos/${video.id}`);
+  return redirect(`/videos`);
 };
 
 export default function NewVideoPage() {
@@ -47,13 +47,8 @@ export default function NewVideoPage() {
 
   return (
     <Form
+      className="flex flex-col gap-8 px-4 w-full py-4"
       method="post"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 8,
-        width: "100%",
-      }}
     >
       <div>
         <label className="flex w-full flex-col gap-1">

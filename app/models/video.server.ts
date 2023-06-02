@@ -16,10 +16,9 @@ export function getVideo({
   });
 }
 
-export function getVideoListItems({ userId }: { userId: User["id"] }) {
+export function getVideoListItems() {
   return prisma.video.findMany({
-    where: { userId },
-    select: { id: true, title: true },
+    select: { id: true, title: true, link: true },
     orderBy: { updatedAt: "desc" },
   });
 }
