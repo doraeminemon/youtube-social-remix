@@ -3,7 +3,7 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
-import { createNote } from "~/models/note.server";
+import { createVideo } from "~/models/video.server";
 import { requireUserId } from "~/session.server";
 
 export const action = async ({ request }: ActionArgs) => {
@@ -11,28 +11,28 @@ export const action = async ({ request }: ActionArgs) => {
 
   const formData = await request.formData();
   const title = formData.get("title");
-  const body = formData.get("body");
+  const link = formData.get("link");
 
   if (typeof title !== "string" || title.length === 0) {
     return json(
-      { errors: { body: null, title: "Title is required" } },
+      { errors: { link: null, title: "Title is required" } },
       { status: 400 }
     );
   }
 
-  if (typeof body !== "string" || body.length === 0) {
+  if (typeof link !== "string" || link.length === 0) {
     return json(
-      { errors: { body: "Body is required", title: null } },
+      { errors: { link: "Link is required", title: null } },
       { status: 400 }
     );
   }
 
-  const note = await createNote({ body, title, userId });
+  const video = await createVideo({ link, title, userId });
 
-  return redirect(`/notes/${note.id}`);
+  return redirect(`/videos/${video.id}`);
 };
 
-export default function NewNotePage() {
+export default function NewVideoPage() {
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
@@ -40,7 +40,7 @@ export default function NewNotePage() {
   useEffect(() => {
     if (actionData?.errors?.title) {
       titleRef.current?.focus();
-    } else if (actionData?.errors?.body) {
+    } else if (actionData?.errors?.link) {
       bodyRef.current?.focus();
     }
   }, [actionData]);
@@ -80,18 +80,18 @@ export default function NewNotePage() {
           <span>Body: </span>
           <textarea
             ref={bodyRef}
-            name="body"
+            name="link"
             rows={8}
             className="w-full flex-1 rounded-md border-2 border-blue-500 px-3 py-2 text-lg leading-6"
-            aria-invalid={actionData?.errors?.body ? true : undefined}
+            aria-invalid={actionData?.errors?.link ? true : undefined}
             aria-errormessage={
-              actionData?.errors?.body ? "body-error" : undefined
+              actionData?.errors?.link ? "body-error" : undefined
             }
           />
         </label>
-        {actionData?.errors?.body ? (
+        {actionData?.errors?.link ? (
           <div className="pt-1 text-red-700" id="body-error">
-            {actionData.errors.body}
+            {actionData.errors.link}
           </div>
         ) : null}
       </div>

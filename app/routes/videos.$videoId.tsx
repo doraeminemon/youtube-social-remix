@@ -8,36 +8,36 @@ import {
 } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteNote, getNote } from "~/models/note.server";
+import { deleteVideo, getVideo } from "~/models/video.server";
 import { requireUserId } from "~/session.server";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  invariant(params.videoId, "videoId not found");
 
-  const note = await getNote({ id: params.noteId, userId });
-  if (!note) {
+  const video = await getVideo({ id: params.videoId, userId });
+  if (!video) {
     throw new Response("Not Found", { status: 404 });
   }
-  return json({ note });
+  return json({ video });
 };
 
 export const action = async ({ params, request }: ActionArgs) => {
   const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  invariant(params.videoId, "videoId not found");
 
-  await deleteNote({ id: params.noteId, userId });
+  await deleteVideo({ id: params.videoId, userId });
 
-  return redirect("/notes");
+  return redirect("/videos");
 };
 
-export default function NoteDetailsPage() {
+export default function VideoDetailsPage() {
   const data = useLoaderData<typeof loader>();
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6">{data.note.body}</p>
+      <h3 className="text-2xl font-bold">{data.video.title}</h3>
+      <p className="py-6">{data.video.link}</p>
       <hr className="my-4" />
       <Form method="post">
         <button

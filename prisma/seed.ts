@@ -16,26 +16,22 @@ async function seed() {
   const user = await prisma.user.create({
     data: {
       email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
+      password: hashedPassword
     },
   });
 
-  await prisma.note.create({
+  await prisma.video.create({
     data: {
       title: "My first note",
-      body: "Hello, world!",
+      link: "Hello, world!",
       userId: user.id,
     },
   });
 
-  await prisma.note.create({
+  await prisma.video.create({
     data: {
       title: "My second note",
-      body: "Hello, world!",
+      link: "Hello, world!",
       userId: user.id,
     },
   });

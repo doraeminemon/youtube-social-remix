@@ -14,21 +14,23 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  password Password?
-  notes    Note[]
+  password String
+  videos   Video[]
+  Token    Token[]
 }
 
-model Password {
-  hash String
+model Token {
+  id           String @id @default(cuid())
+  session_type String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String @unique
+  userId String
 }
 
-model Note {
+model Video {
   id    String @id @default(cuid())
   title String
-  body  String
+  link  String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
