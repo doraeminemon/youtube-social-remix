@@ -35,7 +35,7 @@ export const action = async ({ request }: ActionArgs) => {
 export default function NewVideoPage() {
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const bodyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (actionData?.errors?.title) {
@@ -72,11 +72,10 @@ export default function NewVideoPage() {
 
       <div>
         <label className="flex w-full flex-col gap-1">
-          <span>Body: </span>
-          <textarea
+          <span>Link: </span>
+          <input
             ref={bodyRef}
             name="link"
-            rows={8}
             className="w-full flex-1 rounded-md border-2 border-blue-500 px-3 py-2 text-lg leading-6"
             aria-invalid={actionData?.errors?.link ? true : undefined}
             aria-errormessage={
@@ -96,7 +95,7 @@ export default function NewVideoPage() {
           type="submit"
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
         >
-          Save
+          Share
         </button>
       </div>
     </Form>

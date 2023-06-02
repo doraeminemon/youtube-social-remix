@@ -17,7 +17,7 @@ export default function VideoIndexPage() {
       <main className="flex h-full bg-white justify-center min-h-screen w-full">
         <div className="h-full max-w-80 lg:w-1/2 w-full px-4">
           <Link to="new" className="block p-4 text-xl text-gray-50 bg-blue-500 hover:bg-blue-300 rounded-md my-4">
-            + New Video
+            Share a new video
           </Link>
 
           <hr />

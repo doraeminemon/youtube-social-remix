@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 export default function VideosPage() {
   return (
     <div className="flex h-full min-h-screen flex-col">
-      <header className="sticky top-0 left-0 flex items-center justify-between bg-slate-800 py-4 text-white px-2">
+      <header className="sticky top-0 left-0 flex items-center justify-between bg-slate-800 py-4 text-white px-4">
         <h1 className="text-3xl font-bold">
           <Link to=".">Videos</Link>
         </h1>
