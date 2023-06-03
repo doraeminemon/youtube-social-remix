@@ -2,6 +2,7 @@ import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
+import useWebSocket from 'react-use-websocket';
 
 import { createVideo } from "~/models/video.server";
 import { requireUserId } from "~/session.server";
@@ -35,13 +36,14 @@ export const action = async ({ request }: ActionArgs) => {
 export default function NewVideoPage() {
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
-  const bodyRef = useRef<HTMLInputElement>(null);
+  const linkRef = useRef<HTMLInputElement>(null);
+  const { sendMessage } = useWebSocket<{ message: string }>('ws://localhost:8000');
 
   useEffect(() => {
     if (actionData?.errors?.title) {
       titleRef.current?.focus();
     } else if (actionData?.errors?.link) {
-      bodyRef.current?.focus();
+      linkRef.current?.focus();
     }
   }, [actionData]);
 
@@ -74,7 +76,7 @@ export default function NewVideoPage() {
         <label className="flex w-full flex-col gap-1">
           <span>Link: </span>
           <input
-            ref={bodyRef}
+            ref={linkRef}
             name="link"
             className="w-full flex-1 rounded-md border-2 border-blue-500 px-3 py-2 text-lg leading-6"
             aria-invalid={actionData?.errors?.link ? true : undefined}
@@ -94,6 +96,12 @@ export default function NewVideoPage() {
         <button
           type="submit"
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+          onClick={() => {
+            // broadcast message to all other clients
+            const title = titleRef.current?.value
+            const link = linkRef.current?.value
+            sendMessage(JSON.stringify({ title, link }))
+          }}
         >
           Share
         </button>
