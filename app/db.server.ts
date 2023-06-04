@@ -40,7 +40,7 @@ function getClient() {
 
     if (!isReadReplicaRegion) {
       // 5433 is the read-replica port
-      databaseUrl.port = "5433";
+      databaseUrl.port = "5432";
     }
   }
 

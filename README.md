@@ -8,6 +8,30 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 npx create-remix@latest --template remix-run/blues-stack
 ```
 
+## Instruction
+
+### Introduction
+This project used Remix as a template, then build up as per the requirement for the front end developer test
+### Prerequisites
+- NodeJS & npm
+- OpenSSL for Prisma
+- Postgres version >13 or Docker
+
+### Installation
+- Build all respective Docker instances by running `docker-compose build`
+- Start all docker containers by running `docker-compose up -d`
+- With all the Docker instances in place, run `export DATABASE_URL="postgresql://postgres:postgres@localhost:5433/postgres"; npm run setup` to setup the database while pointing to the Dockerized postgres instance to setting up the tables, running seed data
+
+### Usage
+- Test the app by visiting `localhost:3000` on local
+- Login using the seeded account or registering a new one.
+- Running the test suite by running `npm run test`
+
+### Deployment
+
+E2E test
+Deployment
+
 ## What's in the stack
 
 - [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
