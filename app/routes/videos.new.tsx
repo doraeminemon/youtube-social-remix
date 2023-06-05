@@ -37,7 +37,7 @@ export default function NewVideoPage() {
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
-  const { sendMessage } = useWebSocket<{ message: string }>('ws://localhost:8000');
+  const { sendMessage } = useWebSocket<{ message: string }>('wss://youtube-social-ws.fly.dev/');
 
   useEffect(() => {
     if (actionData?.errors?.title) {

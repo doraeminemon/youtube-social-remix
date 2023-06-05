@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function VideoIndexPage() {
   const data = useLoaderData<typeof loader>();
-  const { lastMessage } = useWebSocket<{ message: string }>('ws://localhost:8000');
+  const { lastMessage } = useWebSocket<{ message: string }>('wss://youtube-social-ws.fly.dev/');
   const [messageHistory, setMessageHistory] = useState<{link: string, title: string}[]>([]);
 
   useEffect(() => {
@@ -25,9 +25,7 @@ export default function VideoIndexPage() {
         const str = String.fromCharCode(...data.data)
         const obj = JSON.parse(str)
         setMessageHistory((prev) => prev.concat(obj))
-        console.log({ obj })
       }
-      console.log({ data })
     } catch (err) {
       console.log(err)
     }
