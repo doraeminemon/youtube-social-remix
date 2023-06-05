@@ -22,3 +22,7 @@ This project used [Remix Blues stack](https://remix.run/stacks) as a template, t
 - Unit test can be run with command `npm run test`
 - End to end testing can be run with command `npm run test:e2e:dev`
 
+## What is missing
+- Deployment to `fly.io` with Docker
+- More intensive testing and E2E testing with Cypress
+
