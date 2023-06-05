@@ -16,7 +16,6 @@ This project used [Remix Blues stack](https://remix.run/stacks) as a template, t
 ### Usage
 - Test the app by visiting `localhost:3000` on local
 - Login using the seeded account or registering a new one.
-- Running the test suite by running `npm run test`
 
 ### Testing
 
