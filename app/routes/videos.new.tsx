@@ -33,11 +33,13 @@ export const action = async ({ request }: ActionArgs) => {
   return redirect(`/videos`);
 };
 
+const WS_URL = process.env.WS_URL || 'ws://localhost:8000'
+
 export default function NewVideoPage() {
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
-  const { sendMessage } = useWebSocket<{ message: string }>('wss://youtube-social-ws.fly.dev/');
+  const { sendMessage } = useWebSocket<{ message: string }>(WS_URL);
 
   useEffect(() => {
     if (actionData?.errors?.title) {

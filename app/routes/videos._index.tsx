@@ -7,6 +7,8 @@ import useWebSocket from 'react-use-websocket';
 import { getVideoListItems } from "~/models/video.server";
 import { requireUserId } from "~/session.server";
 
+const WS_URL = process.env.WS_URL || 'ws://localhost:8000'
+
 export const loader = async ({ request }: LoaderArgs) => {
   await requireUserId(request);
   const videoListItems = await getVideoListItems();
@@ -15,7 +17,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function VideoIndexPage() {
   const data = useLoaderData<typeof loader>();
-  const { lastMessage } = useWebSocket<{ message: string }>('wss://youtube-social-ws.fly.dev/');
+  const { lastMessage } = useWebSocket<{ message: string }>(WS_URL);
   const [messageHistory, setMessageHistory] = useState<{link: string, title: string}[]>([]);
 
   useEffect(() => {
